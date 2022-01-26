@@ -15,18 +15,17 @@ import java.util.Properties;
  */
 public class PropertMgr {
     private static PropertMgr propertMgr=null;
-    private static Properties props=null;
+    private static Properties props=new Properties();
+    static {
+        try {
+            props.load(PropertMgr.class.getClassLoader().getResourceAsStream("config"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
     public static PropertMgr getPropertMgr(){
         if(propertMgr==null){
             propertMgr=new PropertMgr();
-        }
-        if(props==null){
-            props=new Properties();
-            try {
-                props.load(PropertMgr.class.getClassLoader().getResourceAsStream("config"));
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
         }
         return propertMgr;
     }

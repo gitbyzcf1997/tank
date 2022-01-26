@@ -126,6 +126,7 @@ public class TankFrame extends Frame {
                     default:break;
             }
             setMainTankDir();
+            new Thread(()->new Audio("audio/tank_move.wav").play()).start();
         }
 
         private void setMainTankDir() {
