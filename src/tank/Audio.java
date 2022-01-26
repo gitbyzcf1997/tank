@@ -34,7 +34,7 @@ public class Audio{
                 //开始运行
                 sourceDataLine.start();
                 //输出音频流状态
-                System.out.println(audioInputStream.markSupported());
+                //System.out.println(audioInputStream.markSupported());
                 audioInputStream.mark(12358946);
                 //循环输出缓冲区数据
                 while ((len=audioInputStream.read(bytes))>0){

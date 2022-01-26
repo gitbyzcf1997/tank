@@ -20,11 +20,16 @@ import java.io.IOException;
  * 在程序加载时把图片资源初始化
  */
 public class ResourceMgr {
+    private static final ResourceMgr INSTANCE=new ResourceMgr();
     //初始化四张图片
     public  static BufferedImage goodtankL,goodtankR,goodtankU,goodtankD=null;
     public  static BufferedImage badtankL,badtankR,badtankU,badtankD=null;
     public  static BufferedImage bulletL,bulletR,bulletU,bulletD=null;
     public  static BufferedImage[] explodes=new BufferedImage[16];
+
+    private ResourceMgr() {
+    }
+
     static {
         try {
             //将坦克的图片加载到内存
@@ -51,4 +56,7 @@ public class ResourceMgr {
         }
     }
 
+    public static ResourceMgr getINSTANCE() {
+        return INSTANCE;
+    }
 }

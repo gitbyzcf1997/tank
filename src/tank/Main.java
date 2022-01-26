@@ -2,10 +2,6 @@ package tank;
 
 import util.PropertMgr;
 
-import java.awt.*;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
-
 /**
  * @Auther:ZhenCF
  * @Date: 2022-01-24-21:40
@@ -15,7 +11,7 @@ import java.awt.event.WindowEvent;
 public class Main {
     public static void main(String[] args) throws InterruptedException {
         TankFrame tankFrame = new TankFrame();
-        PropertMgr pg = PropertMgr.getPropertMgr();
+        PropertMgr pg = PropertMgr.getInstance();
         int initTankCount= pg.getInt("initTankCount");
         //初始化敌方坦克
         for(int i=0;i<initTankCount;i++){

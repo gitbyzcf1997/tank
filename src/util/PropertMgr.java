@@ -14,7 +14,11 @@ import java.util.Properties;
  * 配置文件中 的属性管理
  */
 public class PropertMgr {
-    private static PropertMgr propertMgr=null;
+
+    //使用匿名内部类进行单例（懒加载）
+    private static class PropertHolader{
+        private static final PropertMgr INSTANCE =new PropertMgr();
+    }
     private static Properties props=new Properties();
     static {
         try {
@@ -23,14 +27,13 @@ public class PropertMgr {
             e.printStackTrace();
         }
     }
-    public static PropertMgr getPropertMgr(){
-        if(propertMgr==null){
-            propertMgr=new PropertMgr();
-        }
-        return propertMgr;
+
+    private PropertMgr() {
     }
 
-
+    public static PropertMgr getInstance() {
+        return PropertHolader.INSTANCE;
+    }
 
     public static String getString(String key){
         if(props==null)return null;
