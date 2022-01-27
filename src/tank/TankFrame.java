@@ -22,20 +22,12 @@ import java.util.concurrent.Executors;
  * 窗口
  */
 public class TankFrame extends Frame {
-    //主坦克
-    Tank myTank=new Tank(200,400,Dir.DOWN,this,Group.GOOD);
-    //Explode e=new Explode(100,100,this);
-    //爆炸合集
-    public List<Explode> explodes=new ArrayList<>();
-    //子弹合集
-    public List<Bullet> bulletList=new ArrayList<>();
-    //敌方坦克
-    public List<Tank> tanks=new ArrayList<>();
+    GameModel gm=null;
+
     //窗口宽高
     public static final int GAMEWIDTH=1500;
     public static final int GAMEHEIGHT=800;
     //线程池
-    public ExecutorService executor = Executors.newFixedThreadPool(16);
     public TankFrame(){
         //窗口宽高
         setSize(GAMEWIDTH,GAMEHEIGHT);
@@ -45,7 +37,7 @@ public class TankFrame extends Frame {
         setTitle("坦克大战");
         //窗口可见
         setVisible(true);
-        myTank.setMoving(false);
+        gm.getMainTank().setMoving(false);
         //窗口X号事件监听
         addWindowListener(new WindowAdapter() {
             @Override
@@ -60,31 +52,10 @@ public class TankFrame extends Frame {
     //窗口 重新绘制的时候调用
     @Override
     public void paint(Graphics g) {
-        Color c = g.getColor();
-        g.setColor(Color.WHITE);
-        g.drawString("子弹的数量:"+bulletList.size(),10,60);
-        g.drawString("敌人的数量:"+tanks.size(),10,80);
-        g.setColor(c);
-        //Graphics 画笔类
-        //填充一个矩形
-        if(myTank!=null){
-            myTank.paint(g);
+        if(gm==null) {
+            gm = GameModel.getINSTANCE();
         }
-        for(int i=0;i<bulletList.size();i++){
-            bulletList.get(i).paint(g);
-        }
-        for(int i=0;i<tanks.size();i++){
-            tanks.get(i).paint(g);
-        }
-        for(int i=0;i<bulletList.size();i++){
-            for(int j=0;j<tanks.size();j++) {
-                bulletList.get(i).collideWith(tanks.get(j));
-            }
-        }
-        for (int i=0;i<explodes.size();i++){
-           explodes.get(i).paint(g);
-        }
-
+        gm.paint(g);
     }
     Image offScreenImage=null;
 
@@ -136,13 +107,13 @@ public class TankFrame extends Frame {
 
         private void setMainTankDir() {
             if(!bL&&!bU&&!bR&&!bD){
-                myTank.setMoving(false);
+                gm.getMainTank().setMoving(false);
             }else {
-                myTank.setMoving(true);
-                if (bL) myTank.setDir(Dir.LEFT);
-                if (bU) myTank.setDir(Dir.UP);
-                if (bR) myTank.setDir(Dir.RIGHT);
-                if (bD) myTank.setDir(Dir.DOWN);
+                gm.getMainTank().setMoving(true);
+                if (bL) gm.getMainTank().setDir(Dir.LEFT);
+                if (bU) gm.getMainTank().setDir(Dir.UP);
+                if (bR) gm.getMainTank().setDir(Dir.RIGHT);
+                if (bD) gm.getMainTank().setDir(Dir.DOWN);
             }
         }
 
@@ -164,11 +135,11 @@ public class TankFrame extends Frame {
                     bD=false;
                     break;
                 case KeyEvent.VK_CONTROL:
-                    myTank.fire();
+                    gm.getMainTank().fire();
                     break;
                 case KeyEvent.VK_X:
-                    myTank.setFireStrategy(FourDirFireStrategy.getINSTANCE());
-                    myTank.fire();
+                    gm.getMainTank().setFireStrategy(FourDirFireStrategy.getINSTANCE());
+                    gm.getMainTank().fire();
                     break;
             }
             setMainTankDir();

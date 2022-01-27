@@ -2,6 +2,8 @@ package tank;
 
 
 
+import util.Audio;
+
 import java.awt.*;
 
 /**
@@ -21,20 +23,20 @@ public class Explode  {
     //坐标
     private int x,y;
     private boolean living=true;
-    TankFrame tf=null;
     private int step=0;
     public Thread audio=null;
-    public Explode(int x, int y, TankFrame tf) {
+    public GameModel gm;
+    public Explode(int x, int y, GameModel gm) {
         this.x = x;
         this.y = y;
-        this.tf = tf;
+        this.gm = gm;
        if(audio==null) {
-            tf.executor.submit(()->{new Audio("audio/explode.wav").play();});
+            gm.executor.submit(()->{new Audio("audio/explode.wav").play();});
         }
     }
 
     public void paint(Graphics g){
         g.drawImage(ResourceMgr.explodes[step++],x,y,null);
-        if(step>=ResourceMgr.explodes.length)tf.explodes.remove(this);
+        if(step>=ResourceMgr.explodes.length)gm.explodes.remove(this);
     }
 }

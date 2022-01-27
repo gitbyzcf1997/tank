@@ -2,14 +2,13 @@ package tank;
 
 import tank.strategy.DefaultFireStrategy;
 import tank.strategy.FireStrategy;
-import tank.strategy.FourDirFireStrategy;
+import util.Audio;
 import util.PropertMgr;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.util.Random;
 import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
 /**
  * @Auther:ZhenCF
@@ -46,11 +45,12 @@ public class Tank {
     private Rectangle rect=new Rectangle();
     int count=0;
     public ExecutorService executor;
-    public Tank(int x, int y, Dir dir,TankFrame tf,Group group) {
+    public GameModel gm;
+    public Tank(int x, int y, Dir dir,GameModel gm,Group group) {
         this.x = x;
         this.y = y;
         this.dir = dir;
-        this.tf=tf;
+        this.gm=gm;
         this.group=group;
         rect.x=x;
         rect.y=y;
@@ -65,7 +65,7 @@ public class Tank {
      */
     public void paint(Graphics g) {
         if(!liveing){
-            tf.tanks.remove(this);
+            gm.tanks.remove(this);
         }
         //获取原先画笔的颜色
         Color c = g.getColor();
@@ -128,7 +128,7 @@ public class Tank {
         boundsCheck();
         count++;
         if(this.getGroup()==Group.GOOD&&count>3){
-            tf.executor.submit(()->{new Audio("audio/tank_move.wav").play();});
+            gm.executor.submit(()->{new Audio("audio/tank_move.wav").play();});
             count=0;
         }
     }
@@ -168,7 +168,7 @@ public class Tank {
         //tf.bulletList.add(new Bullet(this.x+ WIDTH /2, this.y+ HEIGHT /2, this.dir,tf,group));
         fireStrategy.fire(this);
         if(this.getGroup()==Group.GOOD){
-            tf.executor.submit(()->{new Audio("audio/tank_fire.wav").play();});
+            gm.executor.submit(()->{new Audio("audio/tank_fire.wav").play();});
         }
     }
 
@@ -191,15 +191,6 @@ public class Tank {
     public int getSPEED() {
         return SPEED;
     }
-
-    public TankFrame getTf() {
-        return tf;
-    }
-
-    public void setTf(TankFrame tf) {
-        this.tf = tf;
-    }
-
     public int getImageWidth() {
         return WIDTH;
     }
@@ -238,5 +229,9 @@ public class Tank {
 
     public void setFireStrategy(FireStrategy fireStrategy) {
         this.fireStrategy = fireStrategy;
+    }
+
+    public GameModel getGm() {
+        return gm;
     }
 }

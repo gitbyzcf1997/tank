@@ -22,25 +22,24 @@ public class Bullet  {
     private Dir dir;
     //存活状态 true 存在 false 消失
     private boolean liveing=true;
-    //窗口
-    private TankFrame tf=null;
     //图片宽高
     public static int WIDTH =ResourceMgr.bulletU.getWidth();
     public static int HEIGHT =ResourceMgr.bulletU.getHeight();
     //rect
     private Rectangle rect=new Rectangle();
     private Group group=Group.BAD;
-    public Bullet(int x, int y, Dir dir,TankFrame tankFrame,Group group) {
+    private GameModel gm;
+    public Bullet(int x, int y, Dir dir,GameModel gm,Group group) {
         this.x = x;
         this.y = y;
         this.dir = dir;
-        this.tf=tankFrame;
+        this.gm=gm;
         this.group=group;
         rect.x=x;
         rect.y=y;
         rect.width= WIDTH;
         rect.height= HEIGHT;
-        tf.bulletList.add(this);
+        gm.bulletList.add(this);
     }
 
     /***
@@ -51,7 +50,7 @@ public class Bullet  {
         //判断子弹是否存在
         if(!liveing){
             //如果不存在删除子弹
-            tf.bulletList.remove(this);
+            gm.bulletList.remove(this);
         }
         //获取画笔原先颜色
         Color c=g.getColor();
@@ -111,7 +110,7 @@ public class Bullet  {
             this.die();
             int ex=tank.getX()+Tank.WIDTH /2-Explode.WIDTH/2;
             int ey=tank.getY()+Tank.HEIGHT /2-Explode.HEIGHT/2;
-            tf.explodes.add(new Explode(ex,ey,tf));
+            gm.explodes.add(new Explode(ex,ey,gm));
         }
     }
 
