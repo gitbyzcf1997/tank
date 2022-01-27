@@ -13,20 +13,20 @@ import tank.Tank;
  */
 public class BulletTankCollider implements Collider {
     @Override
-    public void collide(GameObject o1, GameObject o2) {
+    public boolean collide(GameObject o1, GameObject o2) {
         if(o1 instanceof Bullet&&o2 instanceof Tank){
             Tank tank=(Tank)o2;
             Bullet bullet=(Bullet) o1;
-            collideWith(bullet,tank);
+            if(collideWith(bullet,tank)){
+                return false;
+            };
         }else if(o1 instanceof Tank&&o2 instanceof Bullet){
-            collide(o2,o1);
-        }else {
-            return;
+           return collide(o2,o1);
         }
-
+        return true;
     }
-    private void collideWith(Bullet bullet,Tank tank){
-        if(bullet.getGroup()==tank.getGroup())return;
+    private boolean collideWith(Bullet bullet,Tank tank){
+        if(bullet.getGroup()==tank.getGroup())return false;
         //TODO：用一个rect来记录子弹的位置
         //判断是否相交
         if(tank.getRect().intersects(bullet.getRect())){
@@ -35,6 +35,8 @@ public class BulletTankCollider implements Collider {
             int ex=tank.getX()+Tank.WIDTH /2-Explode.WIDTH/2;
             int ey=tank.getY()+Tank.HEIGHT /2-Explode.HEIGHT/2;
             bullet.getGm().add(new Explode(ex,ey,bullet.getGm()));
+            return true;
         }
+        return false;
     }
 }

@@ -15,7 +15,7 @@ import java.util.List;
 /**
  * 责任链
  */
-public class ColliderChain {
+public class ColliderChain implements Collider{
     private List<Collider> colliders=new LinkedList<>();
     public void add(Collider collider){
         colliders.add(collider);
@@ -26,9 +26,10 @@ public class ColliderChain {
         add(new TankTankCollider());
     }
 
-    public void collide(GameObject o1, GameObject o2) {
+    public boolean collide(GameObject o1, GameObject o2) {
         for(int i=0;i<colliders.size();i++){
-            colliders.get(i).collide(o1,o2);
+            if(!colliders.get(i).collide(o1,o2))return false;
         }
+        return true;
     }
 }

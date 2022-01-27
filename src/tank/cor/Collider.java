@@ -14,5 +14,5 @@ import tank.GameObject;
  * 负责两个物体间的碰撞
  */
 public interface Collider {
-    void collide(GameObject o1,GameObject o2);
+    boolean collide(GameObject o1,GameObject o2);
 }
