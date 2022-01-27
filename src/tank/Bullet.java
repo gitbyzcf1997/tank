@@ -1,7 +1,5 @@
 package tank;
 
-import tank.factory.BaseBullet;
-
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
@@ -15,7 +13,7 @@ import java.awt.image.BufferedImage;
 /**
  * 普通子弹类  提供子弹的属性和方法
  */
-public class Bullet extends BaseBullet {
+public class Bullet  {
     //移动速度
     private static final int SPEED=10;
     //坐标
@@ -113,7 +111,7 @@ public class Bullet extends BaseBullet {
             this.die();
             int ex=tank.getX()+Tank.WIDTH /2-Explode.WIDTH/2;
             int ey=tank.getY()+Tank.HEIGHT /2-Explode.HEIGHT/2;
-            tf.explodes.add(tf.gf.createExplode(ex,ey,tf));
+            tf.explodes.add(new Explode(ex,ey,tf));
         }
     }
 

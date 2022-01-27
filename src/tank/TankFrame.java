@@ -1,6 +1,4 @@
 package tank;
-
-import tank.factory.*;
 import tank.strategy.FourDirFireStrategy;
 
 import java.awt.*;
@@ -24,15 +22,13 @@ import java.util.concurrent.Executors;
  * 窗口
  */
 public class TankFrame extends Frame {
-    //初始化工厂
-    public GameFactory gf=new DefalutFactory();
     //主坦克
-    BaseTank myTank=gf.createTank(200,400,Dir.DOWN,Group.GOOD,this);
+    Tank myTank=new Tank(200,400,Dir.DOWN,this,Group.GOOD);
     //Explode e=new Explode(100,100,this);
     //爆炸合集
-    public List<BaseExplode> explodes=new ArrayList<>();
+    public List<Explode> explodes=new ArrayList<>();
     //子弹合集
-    public List<BaseBullet> bulletList=new ArrayList<>();
+    public List<Bullet> bulletList=new ArrayList<>();
     //敌方坦克
     public List<Tank> tanks=new ArrayList<>();
     //窗口宽高

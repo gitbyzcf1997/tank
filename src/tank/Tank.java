@@ -1,7 +1,5 @@
 package tank;
 
-import tank.factory.BaseTank;
-import tank.factory.RectFBullet;
 import tank.strategy.DefaultFireStrategy;
 import tank.strategy.FireStrategy;
 import tank.strategy.FourDirFireStrategy;
@@ -23,7 +21,7 @@ import java.util.concurrent.Executors;
 /***
  * 坦克类  提供属性和方法
  */
-public class Tank extends BaseTank {
+public class Tank {
     //坐标
     private int x,y;
     //方向
@@ -169,17 +167,9 @@ public class Tank extends BaseTank {
         //if(!liveing)return;
         //tf.bulletList.add(new Bullet(this.x+ WIDTH /2, this.y+ HEIGHT /2, this.dir,tf,group));
         fireStrategy.fire(this);
-//        int bX=this.x+Tank.WIDTH/2-Bullet.WIDTH/2;
-//        int bY=this.y+Tank.HEIGHT/2-Bullet.HEIGHT/2;
-//        new RectFBullet(bX,bY,this.dir,this.tf,this.getGroup());
         if(this.getGroup()==Group.GOOD){
             tf.executor.submit(()->{new Audio("audio/tank_fire.wav").play();});
         }
-    }
-
-    @Override
-    public void setFireStrategy(FourDirFireStrategy instance) {
-        this.fireStrategy=instance;
     }
 
     public int getX() {

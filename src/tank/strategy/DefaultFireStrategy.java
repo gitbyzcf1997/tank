@@ -1,7 +1,6 @@
 package tank.strategy;
 
 import tank.*;
-import tank.factory.RectFBullet;
 
 /**
  * @Auther:ZhenCF
