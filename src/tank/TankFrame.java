@@ -33,6 +33,7 @@ public class TankFrame extends Frame {
         setSize(GAMEWIDTH,GAMEHEIGHT);
         //窗口是否可改变大小
         setResizable(false);
+        gm=GameModel.getINSTANCE();
         //窗口标题
         setTitle("坦克大战");
         //窗口可见
@@ -52,9 +53,6 @@ public class TankFrame extends Frame {
     //窗口 重新绘制的时候调用
     @Override
     public void paint(Graphics g) {
-        if(gm==null) {
-            gm = GameModel.getINSTANCE();
-        }
         gm.paint(g);
     }
     Image offScreenImage=null;

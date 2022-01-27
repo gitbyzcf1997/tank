@@ -20,9 +20,11 @@ import java.util.concurrent.ExecutorService;
 /***
  * 坦克类  提供属性和方法
  */
-public class Tank {
+public class Tank extends GameObject{
     //坐标
     private int x,y;
+    //之前的坐标
+    private int oldX,oldY;
     //方向
     private Dir dir=Dir.DOWN;
     //移动速度
@@ -57,6 +59,8 @@ public class Tank {
         rect.width= WIDTH;
         rect.height= HEIGHT;
         SPEED=PropertMgr.getInt("tankSpeed");
+        System.out.println(WIDTH);
+        System.out.println(HEIGHT);
     }
 
     /***
@@ -65,7 +69,7 @@ public class Tank {
      */
     public void paint(Graphics g) {
         if(!liveing){
-            gm.tanks.remove(this);
+            gm.remove(this);
         }
         //获取原先画笔的颜色
         Color c = g.getColor();
@@ -108,6 +112,8 @@ public class Tank {
      * 移动方法
      */
     private void move() {
+        this.oldX=this.x;
+        this.oldY=this.y;
        // if(!liveing)return;
         //如果移动状态为停止 直接返回不做任何动作
         if(!moving)return;
@@ -233,5 +239,20 @@ public class Tank {
 
     public GameModel getGm() {
         return gm;
+    }
+    public void stop(){
+        moving=false;
+    }
+    public void oppositeDir(){
+        switch (dir){
+            case LEFT:this.dir=Dir.RIGHT;break;
+            case RIGHT:this.dir=Dir.LEFT;break;
+            case UP:this.dir=Dir.DOWN;break;
+            case DOWN:this.dir=Dir.UP;break;
+        }
+    }
+    public void resetXY(){
+        this.x=oldX;
+        this.y=oldY;
     }
 }

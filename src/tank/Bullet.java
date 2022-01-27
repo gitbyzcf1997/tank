@@ -13,7 +13,7 @@ import java.awt.image.BufferedImage;
 /**
  * 普通子弹类  提供子弹的属性和方法
  */
-public class Bullet  {
+public class Bullet  extends GameObject{
     //移动速度
     private static final int SPEED=10;
     //坐标
@@ -39,7 +39,7 @@ public class Bullet  {
         rect.y=y;
         rect.width= WIDTH;
         rect.height= HEIGHT;
-        gm.bulletList.add(this);
+        gm.add(this);
     }
 
     /***
@@ -50,7 +50,7 @@ public class Bullet  {
         //判断子弹是否存在
         if(!liveing){
             //如果不存在删除子弹
-            gm.bulletList.remove(this);
+            gm.remove(this);
         }
         //获取画笔原先颜色
         Color c=g.getColor();
@@ -110,11 +110,11 @@ public class Bullet  {
             this.die();
             int ex=tank.getX()+Tank.WIDTH /2-Explode.WIDTH/2;
             int ey=tank.getY()+Tank.HEIGHT /2-Explode.HEIGHT/2;
-            gm.explodes.add(new Explode(ex,ey,gm));
+            gm.add(new Explode(ex,ey,gm));
         }
     }
 
-    private void die() {
+    public void die() {
         this.liveing = false;
     }
 
@@ -124,5 +124,17 @@ public class Bullet  {
 
     public void setGroup(Group group) {
         this.group = group;
+    }
+
+    public Rectangle getRect() {
+        return rect;
+    }
+
+    public void setRect(Rectangle rect) {
+        this.rect = rect;
+    }
+
+    public GameModel getGm() {
+        return gm;
     }
 }
