@@ -1,5 +1,8 @@
 package tank;
 
+import tank.factory.*;
+import tank.strategy.FourDirFireStrategy;
+
 import java.awt.*;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
@@ -7,6 +10,8 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 /**
  * @Auther:ZhenCF
@@ -19,18 +24,22 @@ import java.util.List;
  * 窗口
  */
 public class TankFrame extends Frame {
+    //初始化工厂
+    public GameFactory gf=new DefalutFactory();
     //主坦克
-    Tank myTank=new Tank(200,400,Dir.DOWN,this,Group.GOOD);
+    BaseTank myTank=gf.createTank(200,400,Dir.DOWN,Group.GOOD,this);
     //Explode e=new Explode(100,100,this);
     //爆炸合集
-    List<Explode> explodes=new ArrayList<>();
+    public List<BaseExplode> explodes=new ArrayList<>();
     //子弹合集
-    List<Bullet> bulletList=new ArrayList<>();
+    public List<BaseBullet> bulletList=new ArrayList<>();
     //敌方坦克
-    List<Tank> tanks=new ArrayList<>();
+    public List<Tank> tanks=new ArrayList<>();
     //窗口宽高
     public static final int GAMEWIDTH=1500;
     public static final int GAMEHEIGHT=800;
+    //线程池
+    public ExecutorService executor = Executors.newFixedThreadPool(16);
     public TankFrame(){
         //窗口宽高
         setSize(GAMEWIDTH,GAMEHEIGHT);
@@ -126,7 +135,7 @@ public class TankFrame extends Frame {
                     default:break;
             }
             setMainTankDir();
-            new Thread(()->new Audio("audio/tank_move.wav").play()).start();
+
         }
 
         private void setMainTankDir() {
@@ -158,7 +167,11 @@ public class TankFrame extends Frame {
                 case KeyEvent.VK_DOWN:
                     bD=false;
                     break;
+                case KeyEvent.VK_CONTROL:
+                    myTank.fire();
+                    break;
                 case KeyEvent.VK_X:
+                    myTank.setFireStrategy(FourDirFireStrategy.getINSTANCE());
                     myTank.fire();
                     break;
             }

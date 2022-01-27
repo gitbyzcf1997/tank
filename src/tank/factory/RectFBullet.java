@@ -1,21 +1,17 @@
-package tank;
+package tank.factory;
 
-import tank.factory.BaseBullet;
+import tank.*;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
 /**
  * @Auther:ZhenCF
- * @Date: 2022-01-25-0:29
- * @Description: tank
+ * @Date: 2022-01-27-21:57
+ * @Description: tank.factory
  * @version: 1.0
  */
-
-/**
- * 普通子弹类  提供子弹的属性和方法
- */
-public class Bullet extends BaseBullet {
+public class RectFBullet extends BaseBullet {
     //移动速度
     private static final int SPEED=10;
     //坐标
@@ -32,7 +28,7 @@ public class Bullet extends BaseBullet {
     //rect
     private Rectangle rect=new Rectangle();
     private Group group=Group.BAD;
-    public Bullet(int x, int y, Dir dir,TankFrame tankFrame,Group group) {
+    public RectFBullet(int x, int y, Dir dir, TankFrame tankFrame, Group group) {
         this.x = x;
         this.y = y;
         this.dir = dir;
@@ -58,15 +54,17 @@ public class Bullet extends BaseBullet {
         //获取画笔原先颜色
         Color c=g.getColor();
         //设置画笔颜色为红色
-        g.setColor(Color.RED);
+        g.setColor(Color.YELLOW);
         //画一个圆
         //g.fillOval(x,y,WIGHT,HEIGHT);//坐标 和宽度高度
-        //根据方向获取图片
-        BufferedImage image=inDirGetImage(dir);
-        WIDTH =image.getWidth();
-        HEIGHT =image.getHeight();
-        //画图片
-        g.drawImage(image,x,y,null);
+//        //根据方向获取图片
+//        BufferedImage image=inDirGetImage(dir);
+//        WIDTH =image.getWidth();
+//        HEIGHT =image.getHeight();
+//        //画图片
+//        g.drawImage(image,x,y,null);
+        g.fillRect(x,y,20,20);
+        g.setColor(c);
         //移动
         move();
     }

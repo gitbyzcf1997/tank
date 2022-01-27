@@ -1,7 +1,6 @@
-package tank;
+package tank.factory;
 
-import tank.factory.BaseTank;
-import tank.factory.RectFBullet;
+import tank.*;
 import tank.strategy.DefaultFireStrategy;
 import tank.strategy.FireStrategy;
 import tank.strategy.FourDirFireStrategy;
@@ -11,7 +10,6 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.util.Random;
 import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
 /**
  * @Auther:ZhenCF
@@ -23,7 +21,7 @@ import java.util.concurrent.Executors;
 /***
  * 坦克类  提供属性和方法
  */
-public class Tank extends BaseTank {
+public class RectTank extends BaseTank {
     //坐标
     private int x,y;
     //方向
@@ -48,7 +46,7 @@ public class Tank extends BaseTank {
     private Rectangle rect=new Rectangle();
     int count=0;
     public ExecutorService executor;
-    public Tank(int x, int y, Dir dir,TankFrame tf,Group group) {
+    public RectTank(int x, int y, Dir dir, TankFrame tf, Group group) {
         this.x = x;
         this.y = y;
         this.dir = dir;
@@ -72,15 +70,16 @@ public class Tank extends BaseTank {
         //获取原先画笔的颜色
         Color c = g.getColor();
         //将画笔的颜色改为黄色
-        g.setColor(Color.yellow);
+        g.setColor(Color.BLUE);
         //画一个矩形
         //g.fillRect(x,y,50,50);//坐标 和宽度高度
         //根据方向获取图片
-        BufferedImage image=inDirGetImage(dir);
-        WIDTH =image.getWidth();
-        HEIGHT =image.getHeight();
+//        BufferedImage image=inDirGetImage(dir);
+//        WIDTH =image.getWidth();
+//        HEIGHT =image.getHeight();
         //画图片
-        g.drawImage(image,x,y,null);
+        //g.drawImage(image,x,y,null);
+        g.fillRect(x,y,10*5,10*5);
         //将画笔还原为原先的颜色
         g.setColor(c);
         move();
@@ -137,9 +136,9 @@ public class Tank extends BaseTank {
 
     private void boundsCheck() {
         if(this.x<0)x=0;
-        if(this.y<Tank.HEIGHT -2) y=Tank.HEIGHT -2;
-        if(this.x>TankFrame.GAMEWIDTH-Tank.WIDTH -2) x=TankFrame.GAMEWIDTH-Tank.WIDTH -2;
-        if(this.y>TankFrame.GAMEHEIGHT-Tank.HEIGHT -2)y=TankFrame.GAMEHEIGHT-Tank.HEIGHT -2;
+        if(this.y<RectTank.HEIGHT -2) y=RectTank.HEIGHT -2;
+        if(this.x>TankFrame.GAMEWIDTH-RectTank.WIDTH -2) x=TankFrame.GAMEWIDTH-RectTank.WIDTH -2;
+        if(this.y>TankFrame.GAMEHEIGHT-RectTank.HEIGHT -2)y=TankFrame.GAMEHEIGHT-RectTank.HEIGHT -2;
     }
 
     private void randomDir() {
@@ -168,10 +167,10 @@ public class Tank extends BaseTank {
     public void fire() {
         //if(!liveing)return;
         //tf.bulletList.add(new Bullet(this.x+ WIDTH /2, this.y+ HEIGHT /2, this.dir,tf,group));
-        fireStrategy.fire(this);
-//        int bX=this.x+Tank.WIDTH/2-Bullet.WIDTH/2;
-//        int bY=this.y+Tank.HEIGHT/2-Bullet.HEIGHT/2;
-//        new RectFBullet(bX,bY,this.dir,this.tf,this.getGroup());
+        //fireStrategy.fire(this);
+        int bX=this.x+Tank.WIDTH/2-Bullet.WIDTH/2;
+        int bY=this.y+Tank.HEIGHT/2-Bullet.HEIGHT/2;
+        new RectFBullet(bX,bY,this.dir,this.tf,this.getGroup());
         if(this.getGroup()==Group.GOOD){
             tf.executor.submit(()->{new Audio("audio/tank_fire.wav").play();});
         }

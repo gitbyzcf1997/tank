@@ -1,20 +1,18 @@
-package tank;
+package tank.factory;
 
-import tank.factory.BaseExplode;
+import tank.Audio;
+import tank.ResourceMgr;
+import tank.TankFrame;
 
 import java.awt.*;
 
 /**
  * @Auther:ZhenCF
- * @Date: 2022-01-26-3:45
- * @Description: tank
+ * @Date: 2022-01-27-21:38
+ * @Description: tank.factory
  * @version: 1.0
  */
-
-/**
- * 爆炸效果类
- */
-public class Explode extends BaseExplode {
+public class RectExplode extends BaseExplode {
     //图片宽高
     public static int WIDTH=ResourceMgr.explodes[0].getWidth();
     public static int HEIGHT=ResourceMgr.explodes[0].getHeight();
@@ -24,17 +22,22 @@ public class Explode extends BaseExplode {
     TankFrame tf=null;
     private int step=0;
     public Thread audio=null;
-    public Explode(int x, int y, TankFrame tf) {
+    public RectExplode(int x, int y, TankFrame tf) {
         this.x = x;
         this.y = y;
         this.tf = tf;
-       if(audio==null) {
+        if(audio==null) {
             tf.executor.submit(()->{new Audio("audio/explode.wav").play();});
         }
     }
     @Override
     public void paint(Graphics g){
-        g.drawImage(ResourceMgr.explodes[step++],x,y,null);
-        if(step>=ResourceMgr.explodes.length)tf.explodes.remove(this);
+        //g.drawImage(ResourceMgr.explodes[step++],x,y,null);
+        Color c = g.getColor();
+        g.setColor(Color.red);
+        g.fillRect(x,y,10*step,10*step);
+        step++;
+        if(step>=15)tf.explodes.remove(this);
+        g.setColor(c);
     }
 }
