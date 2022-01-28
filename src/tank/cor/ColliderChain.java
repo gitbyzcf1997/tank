@@ -1,6 +1,7 @@
 package tank.cor;
 
 import tank.GameObject;
+import util.PropertMgr;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -22,8 +23,17 @@ public class ColliderChain implements Collider{
     }
 
     public ColliderChain() {
-        add(new BulletTankCollider());
-        add(new TankTankCollider());
+        String[] collides = PropertMgr.getStringArr("collides");
+        for(int i=0;i<collides.length;i++){
+            //动态添加责任链
+            try {
+                Object object = Class.forName(collides[i]).newInstance();
+                        Collider collider = (Collider) object;
+                add(collider);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     public boolean collide(GameObject o1, GameObject o2) {
@@ -31,5 +41,8 @@ public class ColliderChain implements Collider{
             if(!colliders.get(i).collide(o1,o2))return false;
         }
         return true;
+    }
+    public void remove(Collider collider){
+        this.colliders.remove(collider);
     }
 }

@@ -74,7 +74,7 @@ public class Tank extends GameObject{
         //获取原先画笔的颜色
         Color c = g.getColor();
         //将画笔的颜色改为黄色
-        g.setColor(Color.yellow);
+        //g.setColor(Color.yellow);
         //画一个矩形
         //g.fillRect(x,y,50,50);//坐标 和宽度高度
         //根据方向获取图片

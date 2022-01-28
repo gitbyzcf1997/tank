@@ -31,9 +31,14 @@ public class GameModel {
     }
     private GameModel() {
         int initTankCount= PropertMgr.getInstance().getInt("initTankCount");
+        int initSquareCount= PropertMgr.getInstance().getInt("initSquareCount");
         //初始化敌方坦克
         for(int i=0;i<initTankCount;i++){
             this.add(new Tank((i*ResourceMgr.badtankU.getWidth())*2,150,Dir.DOWN,this,Group.BAD));
+        }
+        //初始墙体
+        for(int i=0;i<initSquareCount;i++){
+            this.add(new Square((i*80*2),300));
         }
     }
     public static GameModel getINSTANCE() {

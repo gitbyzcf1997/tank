@@ -26,6 +26,7 @@ public class ResourceMgr {
     public  static BufferedImage badtankL,badtankR,badtankU,badtankD=null;
     public  static BufferedImage bulletL,bulletR,bulletU,bulletD=null;
     public  static BufferedImage[] explodes=new BufferedImage[16];
+    public static BufferedImage square=null;
 
     private ResourceMgr() {
     }
@@ -51,6 +52,8 @@ public class ResourceMgr {
             for(int i=0;i<16;i++){
                 explodes[i]=ImageIO.read(ResourceMgr.class.getClassLoader().getResourceAsStream("images/e"+(i+1)+".gif"));
             }
+            //将墙的图片添加道内存
+            square=getImage("images/square0.jpg");
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -58,5 +61,13 @@ public class ResourceMgr {
 
     public static ResourceMgr getINSTANCE() {
         return INSTANCE;
+    }
+    public static BufferedImage getImage(String name){
+        try {
+            return ImageIO.read(ResourceMgr.class.getClassLoader().getResourceAsStream(name));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 }

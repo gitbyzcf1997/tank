@@ -43,8 +43,14 @@ public class PropertMgr {
         if(props==null)return -1;
         return Integer.parseInt((String)props.get(key));
     }
-
+    public static String[] getStringArr(String key){
+        if(props==null)return null;
+        String value = (String) props.get(key);
+        String[] values = value.split(",");
+        return values==null?null:values;
+    }
     public static void main(String[] args) {
         System.out.println(PropertMgr.getString("initialization"));
     }
+
 }
