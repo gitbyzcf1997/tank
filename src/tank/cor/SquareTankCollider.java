@@ -1,7 +1,7 @@
 package tank.cor;
 
 import tank.GameObject;
-import tank.Square;
+import tank.Wall;
 import tank.Tank;
 
 /**
@@ -14,13 +14,13 @@ import tank.Tank;
 public class SquareTankCollider implements Collider {
     @Override
     public boolean collide(GameObject o1, GameObject o2) {
-        if(o1 instanceof Square && o2 instanceof Tank){
-            Square square = (Square) o1;
+        if(o1 instanceof Wall && o2 instanceof Tank){
+            Wall square = (Wall) o1;
             Tank tank = (Tank) o2;
             if(square.getRect().intersects(tank.getRect())){
                 tank.resetXY();
             }
-        }else if(o1 instanceof Tank &&o2 instanceof Square){
+        }else if(o1 instanceof Tank &&o2 instanceof Wall){
             collide(o2,o1);
         }
         return true;

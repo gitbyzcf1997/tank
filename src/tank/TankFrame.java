@@ -6,10 +6,6 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
 /**
  * @Auther:ZhenCF
@@ -34,6 +30,7 @@ public class TankFrame extends Frame {
         //窗口是否可改变大小
         setResizable(false);
         gm=GameModel.getINSTANCE();
+        gm.initialize();
         //窗口标题
         setTitle("坦克大战");
         //窗口可见

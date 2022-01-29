@@ -26,7 +26,7 @@ public class ResourceMgr {
     public  static BufferedImage badtankL,badtankR,badtankU,badtankD=null;
     public  static BufferedImage bulletL,bulletR,bulletU,bulletD=null;
     public  static BufferedImage[] explodes=new BufferedImage[16];
-    public static BufferedImage square=null;
+    public static BufferedImage wall =null;
 
     private ResourceMgr() {
     }
@@ -53,7 +53,7 @@ public class ResourceMgr {
                 explodes[i]=ImageIO.read(ResourceMgr.class.getClassLoader().getResourceAsStream("images/e"+(i+1)+".gif"));
             }
             //将墙的图片添加道内存
-            square=getImage("images/square0.jpg");
+            wall =getImage("images/square0.jpg");
         } catch (IOException e) {
             e.printStackTrace();
         }

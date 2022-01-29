@@ -7,4 +7,4 @@ bulletSpeed=10
 goodFS=tank.strategy.FourDirFireStrategy
 badFS=tank.strategy.DefaultFireStrategy
 #colliders
-collides=tank.cor.BulletTankCollider,tank.cor.TankTankCollider,tank.cor.SquareTankCollider
+collides=tank.cor.BulletTankCollider,tank.cor.TankTankCollider,tank.cor.SquareTankCollider,tank.cor.BulletWallCollider

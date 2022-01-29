@@ -1,9 +1,6 @@
 package tank;
 
-import tank.cor.BulletTankCollider;
-import tank.cor.Collider;
 import tank.cor.ColliderChain;
-import tank.cor.TankTankCollider;
 import util.PropertMgr;
 
 import java.awt.*;
@@ -20,25 +17,28 @@ import java.util.concurrent.Executors;
  */
 public class GameModel {
     //主坦克
-    Tank myTank=new Tank(200,400,Dir.DOWN,this,Group.GOOD);
+    Tank myTank;
     //游戏元素集合
     private List<GameObject> objects=new ArrayList<>();
     ColliderChain colliderChain=new ColliderChain();
     public ExecutorService executor = Executors.newFixedThreadPool(16);
     private static class GameModelHandle{
-
-        static final GameModel INSTANCE=new GameModel();
+        private final static GameModel INSTANCE=new GameModel();
     }
     private GameModel() {
+    }
+    //初始化元素
+    public void initialize(){
+        myTank=new Tank(200,400,Dir.DOWN,this,Group.GOOD);
         int initTankCount= PropertMgr.getInstance().getInt("initTankCount");
         int initSquareCount= PropertMgr.getInstance().getInt("initSquareCount");
         //初始化敌方坦克
         for(int i=0;i<initTankCount;i++){
-            this.add(new Tank((i*ResourceMgr.badtankU.getWidth())*2,150,Dir.DOWN,this,Group.BAD));
+            new Tank((i*ResourceMgr.badtankU.getWidth())*2,150,Dir.DOWN,this,Group.BAD);
         }
         //初始墙体
         for(int i=0;i<initSquareCount;i++){
-            this.add(new Square((i*80*2),300));
+            new Wall((i*80*2),300);
         }
     }
     public static GameModel getINSTANCE() {

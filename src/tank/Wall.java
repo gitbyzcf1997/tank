@@ -1,7 +1,5 @@
 package tank;
 
-import util.PropertMgr;
-
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
@@ -11,27 +9,28 @@ import java.awt.image.BufferedImage;
  * @Description: tank
  * @version: 1.0
  */
-public class Square extends GameObject {
+public class Wall extends GameObject {
     private int x,y;
-   // private int WIDTH=ResourceMgr.square.getWidth();
-    //private int HEIGHT=ResourceMgr.square.getHeight();
+   // private int WIDTH=ResourceMgr.Wall.getWidth();
+    //private int HEIGHT=ResourceMgr.Wall.getHeight();
     private int WIDTH=50;
     private int HEIGHT=50;
     private Rectangle rect=new Rectangle();
     @Override
     public void paint(Graphics g) {
-        BufferedImage square = ResourceMgr.square;
+        BufferedImage square = ResourceMgr.wall;
         Color c = g.getColor();
         g.drawImage(square,x,y,WIDTH,HEIGHT,null);
     }
 
-    public Square(int x, int y) {
+    public Wall(int x, int y) {
         this.x = x;
         this.y = y;
         rect.x=x;
         rect.y=y;
         rect.width=WIDTH;
         rect.height=HEIGHT;
+        GameModel.getINSTANCE().add(this);
     }
 
     public int getX() {

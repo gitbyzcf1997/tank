@@ -47,20 +47,17 @@ public class Tank extends GameObject{
     private Rectangle rect=new Rectangle();
     int count=0;
     public ExecutorService executor;
-    public GameModel gm;
     public Tank(int x, int y, Dir dir,GameModel gm,Group group) {
         this.x = x;
         this.y = y;
         this.dir = dir;
-        this.gm=gm;
         this.group=group;
         rect.x=x;
         rect.y=y;
         rect.width= WIDTH;
         rect.height= HEIGHT;
         SPEED=PropertMgr.getInt("tankSpeed");
-        System.out.println(WIDTH);
-        System.out.println(HEIGHT);
+        GameModel.getINSTANCE().add(this);
     }
 
     /***
@@ -69,7 +66,7 @@ public class Tank extends GameObject{
      */
     public void paint(Graphics g) {
         if(!liveing){
-            gm.remove(this);
+            GameModel.getINSTANCE().remove(this);
         }
         //获取原先画笔的颜色
         Color c = g.getColor();
@@ -134,7 +131,7 @@ public class Tank extends GameObject{
         boundsCheck();
         count++;
         if(this.getGroup()==Group.GOOD&&count>3){
-            gm.executor.submit(()->{new Audio("audio/tank_move.wav").play();});
+            GameModel.getINSTANCE().executor.submit(()->{new Audio("audio/tank_move.wav").play();});
             count=0;
         }
     }
@@ -174,7 +171,7 @@ public class Tank extends GameObject{
         //tf.bulletList.add(new Bullet(this.x+ WIDTH /2, this.y+ HEIGHT /2, this.dir,tf,group));
         fireStrategy.fire(this);
         if(this.getGroup()==Group.GOOD){
-            gm.executor.submit(()->{new Audio("audio/tank_fire.wav").play();});
+            GameModel.getINSTANCE().executor.submit(()->{new Audio("audio/tank_fire.wav").play();});
         }
     }
 
@@ -237,9 +234,6 @@ public class Tank extends GameObject{
         this.fireStrategy = fireStrategy;
     }
 
-    public GameModel getGm() {
-        return gm;
-    }
     public void stop(){
         moving=false;
     }

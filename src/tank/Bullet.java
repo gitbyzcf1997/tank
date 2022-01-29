@@ -28,18 +28,17 @@ public class Bullet  extends GameObject{
     //rect
     private Rectangle rect=new Rectangle();
     private Group group=Group.BAD;
-    private GameModel gm;
-    public Bullet(int x, int y, Dir dir,GameModel gm,Group group) {
+    public Bullet(int x, int y, Dir dir,Group group) {
         this.x = x;
         this.y = y;
         this.dir = dir;
-        this.gm=gm;
+
         this.group=group;
         rect.x=x;
         rect.y=y;
         rect.width= WIDTH;
         rect.height= HEIGHT;
-        gm.add(this);
+        GameModel.getINSTANCE().add(this);
     }
 
     /***
@@ -50,7 +49,7 @@ public class Bullet  extends GameObject{
         //判断子弹是否存在
         if(!liveing){
             //如果不存在删除子弹
-            gm.remove(this);
+            GameModel.getINSTANCE().remove(this);
         }
         //获取画笔原先颜色
         Color c=g.getColor();
@@ -96,24 +95,6 @@ public class Bullet  extends GameObject{
         }
         return image;
     }
-
-    /**
-     * 碰撞检测
-     * @param tank
-     */
-    public void collideWith(Tank tank) {
-        if(this.group==tank.getGroup())return;
-        //TODO：用一个rect来记录子弹的位置
-        //判断是否相交
-        if(tank.getRect().intersects(this.rect)){
-            tank.die();
-            this.die();
-            int ex=tank.getX()+Tank.WIDTH /2-Explode.WIDTH/2;
-            int ey=tank.getY()+Tank.HEIGHT /2-Explode.HEIGHT/2;
-            gm.add(new Explode(ex,ey,gm));
-        }
-    }
-
     public void die() {
         this.liveing = false;
     }
@@ -134,7 +115,4 @@ public class Bullet  extends GameObject{
         this.rect = rect;
     }
 
-    public GameModel getGm() {
-        return gm;
-    }
 }
