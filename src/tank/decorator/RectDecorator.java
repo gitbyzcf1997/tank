@@ -17,6 +17,7 @@ public class RectDecorator extends GODecorator {
     }
     @Override
     public void paint(Graphics g){
+        //因为子弹的x，y是动态的 需要时刻更新x，y
         this.x=go.x;
         this.y=go.y;
         //因为父类聚合了GameObject
@@ -25,7 +26,7 @@ public class RectDecorator extends GODecorator {
         //画想要的装饰
         Color c = g.getColor();
         g.setColor(Color.YELLOW);
-        g.drawRect(super.go.x,super.go.y,super.getWidth()+2,super.getHeight()+2);
+        g.drawRect(go.x,go.y,getWidth()+2,getHeight()+2);
         g.setColor(c);
     }
 }
