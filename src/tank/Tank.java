@@ -21,8 +21,6 @@ import java.util.concurrent.ExecutorService;
  * 坦克类  提供属性和方法
  */
 public class Tank extends GameObject{
-    //坐标
-    private int x,y;
     //之前的坐标
     private int oldX,oldY;
     //方向
@@ -85,6 +83,17 @@ public class Tank extends GameObject{
         move();
 
     }
+
+    @Override
+    public int getWidth() {
+        return WIDTH;
+    }
+
+    @Override
+    public int getHeight() {
+        return HEIGHT;
+    }
+
 
     private BufferedImage inDirGetImage(Dir dir) {
         BufferedImage image=null;

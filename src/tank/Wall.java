@@ -10,7 +10,6 @@ import java.awt.image.BufferedImage;
  * @version: 1.0
  */
 public class Wall extends GameObject {
-    private int x,y;
    // private int WIDTH=ResourceMgr.Wall.getWidth();
     //private int HEIGHT=ResourceMgr.Wall.getHeight();
     private int WIDTH=50;
@@ -22,6 +21,8 @@ public class Wall extends GameObject {
         Color c = g.getColor();
         g.drawImage(square,x,y,WIDTH,HEIGHT,null);
     }
+
+
 
     public Wall(int x, int y) {
         this.x = x;
@@ -49,14 +50,15 @@ public class Wall extends GameObject {
         this.y = y;
     }
 
-    public int getWIDTH() {
+    @Override
+    public int getWidth() {
         return WIDTH;
     }
 
     public void setWIDTH(int WIDTH) {
         this.WIDTH = WIDTH;
     }
-
+    @Override
     public int getHeight() {
         return HEIGHT;
     }

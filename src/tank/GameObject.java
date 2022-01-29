@@ -9,6 +9,9 @@ import java.awt.*;
  * @version: 1.0
  */
 public abstract class GameObject {
-    int x,y;
+    //TODO：需要加入一些常量了
+    public int x,y;
     public abstract void paint(Graphics g);
+    public abstract int getWidth();
+    public abstract int getHeight();
 }

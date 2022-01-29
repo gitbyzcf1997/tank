@@ -16,8 +16,6 @@ import java.awt.image.BufferedImage;
 public class Bullet  extends GameObject{
     //移动速度
     private static final int SPEED=10;
-    //坐标
-    private int  x,y;
     //方向
     private Dir dir;
     //存活状态 true 存在 false 消失
@@ -65,6 +63,16 @@ public class Bullet  extends GameObject{
         g.drawImage(image,x,y,null);
         //移动
         move();
+    }
+
+    @Override
+    public int getWidth() {
+        return WIDTH;
+    }
+
+    @Override
+    public int getHeight() {
+        return HEIGHT;
     }
 
     /**

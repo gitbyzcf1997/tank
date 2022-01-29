@@ -24,6 +24,7 @@ public class BulletTankCollider implements Collider {
     }
     private boolean collideWith(Bullet bullet,Tank tank){
         if(bullet.getGroup()==tank.getGroup())return false;
+        else if(tank.getGroup()==Group.GOOD)return false;
         //TODO：用一个rect来记录子弹的位置
         //判断是否相交
         if(tank.getRect().intersects(bullet.getRect())){
