@@ -81,4 +81,8 @@ public class GameModel {
     public void remove(GameObject go){
         this.objects.remove(go);
     }
+
+    public List<GameObject> getObjects() {
+        return objects;
+    }
 }

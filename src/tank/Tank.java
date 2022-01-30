@@ -1,5 +1,8 @@
 package tank;
 
+import tank.observer.FireEvent;
+import tank.observer.FireObserver;
+import tank.observer.MyFireObserver;
 import tank.strategy.DefaultFireStrategy;
 import tank.strategy.FireStrategy;
 import util.Audio;
@@ -7,6 +10,8 @@ import util.PropertMgr;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.util.List;
+import java.util.Arrays;
 import java.util.Random;
 import java.util.concurrent.ExecutorService;
 
@@ -257,5 +262,15 @@ public class Tank extends GameObject{
     public void resetXY(){
         this.x=oldX;
         this.y=oldY;
+    }
+    /**
+     * 以下内容
+     */
+    private List<FireObserver> listens=Arrays.asList(new MyFireObserver());
+    public void handlerKey(){
+        FireEvent e = new FireEvent(System.currentTimeMillis(), this);
+        for(int i=0;i<listens.size();i++){
+            listens.get(i).fire(e);
+        }
     }
 }
