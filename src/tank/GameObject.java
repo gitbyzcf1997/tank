@@ -1,6 +1,7 @@
 package tank;
 
 import java.awt.*;
+import java.io.Serializable;
 
 /**
  * @Auther:ZhenCF
@@ -8,7 +9,7 @@ import java.awt.*;
  * @Description: tank
  * @version: 1.0
  */
-public abstract class GameObject {
+public abstract class GameObject implements Serializable {
     //TODO：需要加入一些常量了
     public int x,y;
     public abstract void paint(Graphics g);

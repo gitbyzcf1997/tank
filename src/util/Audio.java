@@ -4,6 +4,7 @@ package util;
 
 
 import java.io.IOException;
+import java.io.Serializable;
 import javax.sound.sampled.AudioFormat;
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
@@ -15,7 +16,7 @@ import javax.sound.sampled.SourceDataLine;
  * @Description: tank
  * @version: 1.0
  */
-public class Audio{
+public class Audio  {
     byte[] bytes = new byte[1024*1024*15];
     private AudioFormat audioFormat=null;
     private SourceDataLine sourceDataLine=null;

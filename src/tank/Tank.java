@@ -42,7 +42,7 @@ public class Tank extends GameObject{
     private boolean liveing=true;
     //随机数
     private Random random=new Random();
-    private Audio tank_move=new Audio("audio/tank_move.wav");
+    //private Audio tank_move=new Audio("audio/tank_move.wav");
     //那一方的
     private Group group=Group.BAD;
     //默认开火方式
@@ -266,7 +266,7 @@ public class Tank extends GameObject{
     /**
      * 以下内容
      */
-    private List<FireObserver> listens=Arrays.asList(new MyFireObserver());
+    private  List<FireObserver> listens=Arrays.asList(new MyFireObserver());
     public void handlerKey(){
         FireEvent e = new FireEvent(System.currentTimeMillis(), this);
         for(int i=0;i<listens.size();i++){

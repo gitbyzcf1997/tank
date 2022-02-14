@@ -95,6 +95,12 @@ public class TankFrame extends Frame {
                     bD=true;
                     break;
                     default:break;
+                case KeyEvent.VK_S:
+                    gm.save();
+                    break;
+                case KeyEvent.VK_L:
+                    gm.load();
+                    break;
             }
             setMainTankDir();
 

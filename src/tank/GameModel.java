@@ -4,6 +4,7 @@ import tank.cor.ColliderChain;
 import util.PropertMgr;
 
 import java.awt.*;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
@@ -22,6 +23,7 @@ public class GameModel {
     private List<GameObject> objects=new ArrayList<>();
     ColliderChain colliderChain=new ColliderChain();
     public ExecutorService executor = Executors.newFixedThreadPool(16);
+
     private static class GameModelHandle{
         private final static GameModel INSTANCE=new GameModel();
     }
@@ -84,5 +86,44 @@ public class GameModel {
 
     public List<GameObject> getObjects() {
         return objects;
+    }
+    public void save(){
+        File file = new File("c:/zcf/tank.data");
+        ObjectOutputStream oos=null;
+        try {
+             oos=new ObjectOutputStream(new FileOutputStream(file));
+            oos.writeObject(myTank);
+            oos.writeObject(objects);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }finally {
+            if(oos!=null){
+                try{
+                    oos.close();
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+
+    public void load() {
+        File file = new File("c:/zcf/tank.data");
+        ObjectInputStream ois=null;
+        try{
+            ois=new ObjectInputStream(new FileInputStream(file));
+            myTank=(Tank)ois.readObject();
+            objects=(List)ois.readObject();
+        }catch (Exception e){
+            e.printStackTrace();
+        }finally {
+            if(ois!=null){
+                try {
+                    ois.close();
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
+            }
+        }
     }
 }
